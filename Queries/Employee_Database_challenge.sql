@@ -48,3 +48,22 @@ GROUP BY title
 ORDER BY count DESC;
 
 SELECT * FROM retiring_titles;
+
+SELECT DISTINCT ON (emp.emp_no)
+	emp.emp_no,
+	emp.first_name,
+	emp.last_name,
+	emp.birth_date,
+	dep.from_date,
+	dep.to_date,
+	tit.title
+INTO mentorship_eligibility
+FROM employees AS emp
+INNER JOIN dept_emp AS dep
+ON emp.emp_no = dep.emp_no
+INNER JOIN titles AS tit
+ON emp.emp_no = tit.emp_no
+WHERE dep.to_date = '9999-01-01' AND emp.birth_date BETWEEN '1965-01-01' AND '1965-12-31'
+ORDER BY emp.emp_no;
+
+SELECT * FROM mentorship_eligibility;
